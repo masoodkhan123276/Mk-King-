@@ -117,8 +117,8 @@
         </div>
 
         <div class="auth-tabs">
-            <div class="auth-tab active" id="tab-login-btn" onclick="switchAuthTab('login')">LOGIN</div>
-            <div class="auth-tab" id="tab-register-btn" onclick="switchAuthTab('register')">REGISTER</div>
+            <div class="auth-tab active" id="tab-register-btn" onclick="switchAuthTab('register')">REGISTER</div>
+            <div class="auth-tab" id="tab-login-btn" onclick="switchAuthTab('login')">LOGIN</div>
         </div>
 
         <div class="auth-card">
@@ -136,7 +136,7 @@
                     <input type="password" id="auth-password" placeholder="••••••••" required>
                 </div>
 
-                <button type="submit" class="btn-yellow" id="auth-submit-btn">LOGIN</button>
+                <button type="submit" class="btn-yellow" id="auth-submit-btn">REGISTER NOW</button>
             </form>
         </div>
     </div>
@@ -299,7 +299,7 @@
 <script>
     // System Configurations
     const SECRET_ADMIN_PIN = "6666"; // Secret PIN for Admin Panel
-    let currentAuthMode = 'login';
+    let currentAuthMode = 'register'; // Default mode is Register now
     let currentUser = null;
     let currentDepositMethod = 'SadaPay';
     
@@ -340,9 +340,19 @@
 
     function switchAuthTab(mode) {
         currentAuthMode = mode;
-        document.getElementById('tab-login-btn').classList.toggle('active', mode === 'login');
-        document.getElementById('tab-register-btn').classList.toggle('active', mode === 'register');
-        document.getElementById('auth-submit-btn').innerText = mode === 'login' ? 'LOGIN' : 'REGISTER NOW';
+        const loginTab = document.getElementById('tab-login-btn');
+        const regTab = document.getElementById('tab-register-btn');
+        const submitBtn = document.getElementById('auth-submit-btn');
+
+        if(mode === 'login') {
+            loginTab.classList.add('active');
+            regTab.classList.remove('active');
+            submitBtn.innerText = 'LOGIN';
+        } else {
+            regTab.classList.add('active');
+            loginTab.classList.remove('active');
+            submitBtn.innerText = 'REGISTER NOW';
+        }
     }
 
     function handleAuth(e) {
@@ -383,11 +393,4 @@
         document.getElementById('app-header').classList.remove('hidden');
         document.getElementById('bottom-nav').classList.remove('hidden');
         
-        switchView('lobby');
-    }
-
-    function logout() {
-        currentUser = null;
-        document.getElementById('view-auth').classList.remove('hidden');
-        document.getElementById('brand-header').classList.remove('hidden');
-        document.getElementById('app-header').classList.ad
+        switch
