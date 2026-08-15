@@ -3,74 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MK 888 - Official Gaming Platform</title>
+    <title>MK 888 - Gaming Portal</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --accent-color: #f9b134;
-            --text-color: #ffffff;
-            --danger-color: #ff4d4d;
-            --success-color: #2ecc71;
+            --bg-dark: #0f0f13;
+            --card-bg: #1a1a24;
+            --accent: #f9b134;
+            --accent-glow: rgba(249, 177, 52, 0.3);
+            --text-main: #ffffff;
+            --text-sub: #9a9ab0;
+            --danger: #e74c3c;
+            --success: #2ecc71;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; }
         .hidden { display: none !important; }
 
-        .app-container { width: 100%; max-width: 480px; background: var(--bg-color); min-height: 100vh; position: relative; padding-bottom: 70px; border-left: 1px solid #222; border-right: 1px solid #222; }
+        .app-container { width: 100%; max-width: 480px; background: var(--bg-dark); min-height: 100vh; position: relative; padding-bottom: 70px; border-left: 1px solid #222230; border-right: 1px solid #222230; }
 
-        /* Header */
-        .app-header { background: var(--card-bg); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 20px; font-weight: bold; color: var(--accent-color); }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .balance-box { background: #2a2a2a; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--accent-color); font-size: 14px; }
+        /* HEADER */
+        .app-header { background: var(--card-bg); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a3c; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .balance-box { background: #12121a; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--accent); font-size: 13px; color: var(--accent); font-weight: bold; }
 
-        /* Auth Container */
-        .auth-box { padding: 30px 20px; }
-        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #333; }
-        .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #888; font-weight: bold; }
-        .auth-tab.active { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); }
+        /* AUTH SECTION */
+        .auth-card { padding: 35px 20px; background: var(--card-bg); margin: 20px 15px; border-radius: 16px; border: 1px solid #2a2a3c; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .auth-title { text-align: center; color: var(--accent); font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .auth-subtitle { text-align: center; color: var(--text-sub); font-size: 12px; margin-bottom: 25px; }
         
-        .input-group { background: #1a1a1a; padding: 12px 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; gap: 10px; }
-        .input-group i { color: var(--accent-color); }
-        .input-group input, .input-group select { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 15px; }
+        .auth-tabs { display: flex; margin-bottom: 25px; background: #12121a; border-radius: 10px; padding: 4px; }
+        .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: var(--text-sub); font-weight: 600; border-radius: 8px; transition: 0.3s; }
+        .auth-tab.active { color: #000; background: var(--accent); font-weight: bold; }
 
-        .btn-primary { width: 100%; padding: 14px; background: var(--accent-color); border: none; border-radius: 8px; font-weight: bold; color: #000; cursor: pointer; font-size: 16px; margin-top: 10px; }
-        .btn-danger { background: var(--danger-color); color: white; }
-        .btn-success { background: var(--success-color); color: white; }
+        .input-group { background: #12121a; padding: 12px 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #2a2a3c; display: flex; align-items: center; gap: 10px; }
+        .country-flag { display: flex; align-items: center; gap: 6px; padding-right: 10px; border-right: 1px solid #3a3a50; font-size: 14px; font-weight: bold; color: var(--text-main); }
+        .input-group i { color: var(--accent); font-size: 16px; }
+        .input-group input, .input-group select { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
 
-        /* Main View Modules */
+        .btn-primary { width: 100%; padding: 14px; background: linear-gradient(180deg, #f9b134 0%, #d89216 100%); border: none; border-radius: 10px; font-weight: bold; color: #000; cursor: pointer; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 15px var(--accent-glow); }
+        .btn-success { background: var(--success); color: white; }
+
+        /* LOBBY & GAMES */
         .view-section { padding: 15px; }
-
-        /* Games Lobby */
         .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .game-card { background: var(--card-bg); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
-        .game-card:hover { border-color: var(--accent-color); transform: translateY(-3px); }
-        .game-card i { font-size: 40px; color: var(--accent-color); margin-bottom: 10px; }
+        .game-card { background: var(--card-bg); border-radius: 14px; padding: 20px; text-align: center; border: 1px solid #2a2a3c; cursor: pointer; transition: 0.2s; }
+        .game-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .game-card i { font-size: 40px; color: var(--accent); margin-bottom: 10px; }
 
-        /* Aviator Game Screen */
-        .game-display { background: #000; height: 220px; border-radius: 12px; border: 1px solid #333; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
-        .multiplier { font-size: 45px; font-weight: bold; color: var(--accent-color); }
-        .crash-msg { color: var(--danger-color); font-weight: bold; margin-top: 10px; }
+        /* GAME DISPLAYS */
+        .game-display { background: #000; height: 200px; border-radius: 14px; border: 1px solid #2a2a3c; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .multiplier { font-size: 48px; font-weight: bold; color: var(--accent); }
+        .crash-msg { color: var(--danger); font-weight: bold; margin-top: 10px; }
 
-        /* Slots Game Screen */
-        .slots-display { display: flex; justify-content: center; gap: 15px; font-size: 40px; background: #000; padding: 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px; }
+        .slots-display { display: flex; justify-content: center; gap: 15px; font-size: 40px; background: #000; padding: 25px; border-radius: 14px; border: 1px solid #2a2a3c; margin-bottom: 20px; }
+        .payment-card { background: var(--card-bg); padding: 15px; border-radius: 10px; border: 1px solid #2a2a3c; margin-bottom: 15px; }
 
-        /* Payment Forms */
-        .payment-card { background: var(--card-bg); padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; }
-
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: var(--card-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 100; }
-        .nav-item { text-align: center; color: #888; cursor: pointer; font-size: 12px; }
+        /* BOTTOM NAV */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: var(--card-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #2a2a3c; z-index: 100; }
+        .nav-item { text-align: center; color: var(--text-sub); cursor: pointer; font-size: 11px; }
         .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
-        .nav-item.active { color: var(--accent-color); }
+        .nav-item.active { color: var(--accent); }
 
-        /* Admin Table */
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-        th { background: #252525; color: var(--accent-color); }
+        th, td { border: 1px solid #2a2a3c; padding: 8px; text-align: left; }
+        th { background: #12121a; color: var(--accent); }
     </style>
 </head>
 <body>
@@ -82,52 +81,62 @@
         <div class="logo"><i class="fa-solid fa-gamepad"></i> MK 888</div>
         <div class="user-info">
             <div class="balance-box">Rs <span id="user-balance">0.00</span></div>
-            <button onclick="logout()" style="background:none; border:none; color:#888; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i></button>
+            <button onclick="logout()" style="background:none; border:none; color:var(--text-sub); cursor:pointer;"><i class="fa-solid fa-right-from-bracket" style="font-size: 16px;"></i></button>
         </div>
     </div>
 
-    <!-- AUTH SECTION -->
-    <div id="auth-section" class="auth-box">
-        <h2 style="text-align: center; color: var(--accent-color); margin-bottom: 20px;">MK 888 Portal</h2>
-        <div class="auth-tabs">
-            <div class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Login</div>
-            <div class="auth-tab" id="tab-register" onclick="switchAuth('register')">Register</div>
-        </div>
+    <!-- AUTHENTICATION FORM -->
+    <div id="auth-section">
+        <div class="auth-card">
+            <div class="auth-title">MK 888</div>
+            <div class="auth-subtitle">Official Pakistan Gaming Portal</div>
 
-        <div class="input-group">
-            <i class="fa-solid fa-phone"></i>
-            <input type="tel" id="auth-phone" placeholder="Phone Number (e.g. 03001234567)">
-        </div>
-        <div class="input-group">
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" id="auth-pass" placeholder="Password">
-        </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Login</div>
+                <div class="auth-tab" id="tab-register" onclick="switchAuth('register')">Register</div>
+            </div>
 
-        <button class="btn-primary" id="auth-submit-btn" onclick="handleAuth()">Login</button>
+            <!-- PHONE INPUT WITH PAKISTAN FLAG -->
+            <div class="input-group">
+                <div class="country-flag">
+                    <span>🇵🇰</span>
+                    <span>+92</span>
+                </div>
+                <input type="tel" id="auth-phone" placeholder="3001234567" maxlength="10">
+            </div>
+
+            <!-- PASSWORD INPUT -->
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="auth-pass" placeholder="Password">
+            </div>
+
+            <button class="btn-primary" id="auth-submit-btn" onclick="handleAuth()">Login</button>
+        </div>
     </div>
 
-    <!-- DASHBOARD / GAMES LOBBY -->
+    <!-- DASHBOARD LOBBY -->
     <div id="view-lobby" class="view-section hidden">
         <h3>Game Lobby</h3>
-        <p style="color:#888; font-size: 13px; margin-bottom: 15px;">Select a game to start playing</p>
+        <p style="color:var(--text-sub); font-size: 12px; margin-bottom: 15px;">Choose your game & start winning</p>
         
         <div class="games-grid">
             <div class="game-card" onclick="openGame('aviator')">
                 <i class="fa-solid fa-plane-departure"></i>
                 <h4>Aviator</h4>
-                <p style="font-size:11px; color:#888;">Crash Multiplier</p>
+                <p style="font-size:11px; color:var(--text-sub);">Multiplier Crash</p>
             </div>
             <div class="game-card" onclick="openGame('slots')">
                 <i class="fa-solid fa-cubes"></i>
                 <h4>Lucky Slots</h4>
-                <p style="font-size:11px; color:#888;">Spin & Win</p>
+                <p style="font-size:11px; color:var(--text-sub);">Spin & Win</p>
             </div>
         </div>
     </div>
 
-    <!-- GAME: AVIATOR -->
+    <!-- AVIATOR GAME -->
     <div id="view-aviator" class="view-section hidden">
-        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent-color); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
+        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
         <div class="game-display">
             <div class="multiplier" id="aviator-mult">1.00x</div>
             <div class="crash-msg hidden" id="aviator-status">CRASHED!</div>
@@ -145,9 +154,9 @@
         </div>
     </div>
 
-    <!-- GAME: SLOTS -->
+    <!-- SLOTS GAME -->
     <div id="view-slots" class="view-section hidden">
-        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent-color); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
+        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
         
         <div class="slots-display">
             <span id="slot1">🎰</span>
@@ -162,13 +171,13 @@
         <button class="btn-primary" onclick="spinSlots()">Spin Wheel</button>
     </div>
 
-    <!-- DEPOSIT SECTION -->
+    <!-- DEPOSIT -->
     <div id="view-deposit" class="view-section hidden">
         <h3>Deposit Funds</h3>
         <div class="payment-card" style="margin-top:10px;">
-            <p style="font-size:13px; color:#aaa;">Send Deposit to Account:</p>
-            <p style="font-weight:bold; margin-top:5px; color:var(--accent-color);">JazzCash / EasyPaisa: 0300-1234567</p>
-            <p style="font-size:12px; color:#aaa;">Title: MK Gaming Official</p>
+            <p style="font-size:12px; color:var(--text-sub);">Official Account Payment Details:</p>
+            <p style="font-weight:bold; margin-top:5px; color:var(--accent);">JazzCash / EasyPaisa: 0300-1234567</p>
+            <p style="font-size:11px; color:var(--text-sub);">Account Title: MK Gaming Official</p>
         </div>
 
         <div class="input-group">
@@ -188,7 +197,7 @@
         <button class="btn-primary" onclick="submitDeposit()">Submit Deposit Request</button>
     </div>
 
-    <!-- WITHDRAW SECTION -->
+    <!-- WITHDRAW -->
     <div id="view-withdraw" class="view-section hidden">
         <h3>Withdraw Funds</h3>
         <div class="input-group" style="margin-top:15px;">
@@ -208,19 +217,19 @@
         <button class="btn-primary" onclick="submitWithdraw()">Request Withdrawal</button>
     </div>
 
-    <!-- ADMIN PANEL VIEW -->
+    <!-- ADMIN PANEL -->
     <div id="view-admin" class="view-section hidden">
         <h3>Admin Management Panel</h3>
-        <p style="font-size:12px; color:#888;">Approve/Reject User Deposit Requests</p>
+        <p style="font-size:12px; color:var(--text-sub);">Approve User Deposits</p>
         
         <div style="overflow-x:auto;">
             <table>
                 <thead>
                     <tr>
                         <th>User</th>
-                        <th>Method</th>
+                        <th>Type</th>
                         <th>Amount</th>
-                        <th>TRX</th>
+                        <th>TRX/Acc</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -240,7 +249,7 @@
         <div class="nav-item" onclick="showView('withdraw')">
             <i class="fa-solid fa-money-bill-transfer"></i>Withdraw
         </div>
-        <div class="nav-item" id="nav-admin-btn" onclick="showView('admin')">
+        <div class="nav-item hidden" id="nav-admin-btn" onclick="showView('admin')">
             <i class="fa-solid fa-user-shield"></i>Admin
         </div>
     </div>
@@ -248,7 +257,6 @@
 </div>
 
 <script>
-    // System Local Database Initialization
     function getDB(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }
     function setDB(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
 
@@ -258,7 +266,6 @@
     let currentMultiplier = 1.00;
     let isAviatorRunning = false;
 
-    // Authentication Switching
     function switchAuth(mode) {
         currentMode = mode;
         document.getElementById('tab-login').className = mode === 'login' ? 'auth-tab active' : 'auth-tab';
@@ -267,27 +274,44 @@
     }
 
     function handleAuth() {
-        const phone = document.getElementById('auth-phone').value.trim();
+        const rawPhone = document.getElementById('auth-phone').value.trim();
         const pass = document.getElementById('auth-pass').value.trim();
-        if(!phone || !pass) return alert('Please enter phone and password');
 
+        if(!rawPhone || !pass) {
+            alert('Please enter Phone Number and Password');
+            return;
+        }
+
+        const phone = '0' + rawPhone.replace(/^0+/, ''); 
         let users = getDB('mk_users');
 
         if(currentMode === 'register') {
             if(users.find(u => u.phone === phone)) {
-                return alert('Account already exists! Please Login.');
+                alert('Account already exists! Switching to Login.');
+                switchAuth('login');
+                return;
             }
-            users.push({ phone, pass, balance: 100, role: phone === '03000000000' ? 'admin' : 'user' });
+            
+            const newUser = { 
+                phone: phone, 
+                pass: pass, 
+                balance: 100, 
+                role: phone === '03000000000' ? 'admin' : 'user' 
+            };
+            
+            users.push(newUser);
             setDB('mk_users', users);
-            alert('Registration Successful! Signup Bonus: Rs 100. Please Login.');
-            switchAuth('login');
+            
+            localStorage.setItem('mk_session', phone);
+            alert('Registration Successful! Rs 100 Welcome Bonus Added.');
+            initApp();
         } else {
             const user = users.find(u => u.phone === phone && u.pass === pass);
             if(user) {
                 localStorage.setItem('mk_session', phone);
                 initApp();
             } else {
-                alert('Invalid Credentials!');
+                alert('Invalid Phone Number or Password!');
             }
         }
     }
@@ -299,7 +323,10 @@
         let users = getDB('mk_users');
         activeUser = users.find(u => u.phone === session);
 
-        if(!activeUser) return logout();
+        if(!activeUser) {
+            logout();
+            return;
+        }
 
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('app-header').classList.remove('hidden');
@@ -338,18 +365,15 @@
         location.reload();
     }
 
-    /* --- AVIATOR GAME LOGIC --- */
-    function openGame(game) {
-        showView(game);
-    }
+    function openGame(game) { showView(game); }
 
+    /* AVIATOR ENGINE */
     function startAviator() {
         const betInput = document.getElementById('aviator-bet');
         const bet = parseFloat(betInput.value);
 
         if(!bet || bet <= 0 || bet > activeUser.balance) return alert('Invalid Bet Amount!');
 
-        // Deduct Bet
         updateBalance(-bet);
 
         isAviatorRunning = true;
@@ -388,7 +412,7 @@
         document.getElementById('btn-aviator-cash').disabled = true;
     }
 
-    /* --- SLOTS GAME LOGIC --- */
+    /* SLOTS ENGINE */
     function spinSlots() {
         const bet = parseFloat(document.getElementById('slots-bet').value);
         if(!bet || bet <= 0 || bet > activeUser.balance) return alert('Invalid Bet Amount!');
@@ -415,7 +439,6 @@
         }
     }
 
-    /* --- BALANCE MANAGEMENT --- */
     function updateBalance(amount) {
         let users = getDB('mk_users');
         const idx = users.findIndex(u => u.phone === activeUser.phone);
@@ -424,32 +447,6 @@
         updateUserUI();
     }
 
-    /* --- DEPOSIT & WITHDRAW --- */
     function submitDeposit() {
         const amount = parseFloat(document.getElementById('dep-amount').value);
-        const trx = document.getElementById('dep-trx').value.trim();
-        const method = document.getElementById('dep-method').value;
-
-        if(!amount || !trx) return alert('Enter amount and TRX ID');
-
-        let reqs = getDB('mk_requests');
-        reqs.push({ id: Date.now(), user: activeUser.phone, type: 'deposit', method, amount, trx, status: 'pending' });
-        setDB('mk_requests', reqs);
-
-        alert('Deposit Request Submitted! Pending Admin Approval.');
-        document.getElementById('dep-amount').value = '';
-        document.getElementById('dep-trx').value = '';
-    }
-
-    function submitWithdraw() {
-        const amount = parseFloat(document.getElementById('with-amount').value);
-        const acc = document.getElementById('with-account').value.trim();
-        const method = document.getElementById('with-method').value;
-
-        if(!amount || amount > activeUser.balance || !acc) return alert('Invalid Request Amount or Details');
-
-        updateBalance(-amount);
-
-        let reqs = getDB('mk_requests');
-        reqs.push({ id: Date.now(), user: activeUser.phone, type: 'withdraw', method, amount, account: acc, status: 'pending' });
- 
+        const
