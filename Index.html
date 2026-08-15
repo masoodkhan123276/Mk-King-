@@ -42,7 +42,7 @@
         .color-gold { color: var(--accent); font-weight: bold; }
 
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #222; }
-        .auth-tab { flex: 1; text-align: center; padding: 15px 0; cursor: pointer; color: var(--text-sub); font-weight: bold; font-size: 16px; }
+        .auth-tab { flex: 1; text-align: center; padding: 15px 0; cursor: pointer; color: var(--text-sub); font-weight: bold; font-size: 16px; user-select: none; }
         .auth-tab.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
 
         .auth-card { background: var(--card-bg); padding: 25px 20px; border-radius: 12px; border: 1px solid var(--border-color); }
@@ -355,19 +355,28 @@
             return;
         }
 
-        if(userDatabase[phone] && userDatabase[phone].banned) {
-            showToast('Aapka account BAN kar diya gaya hai!', true);
-            return;
-        }
-
-        if(!userDatabase[phone]) {
+        if(currentAuthMode === 'login') {
+            if(!userDatabase[phone]) {
+                showToast('Account not found! Pehle Register karein.', true);
+                return;
+            }
+            if(userDatabase[phone].banned) {
+                showToast('Aapka account BAN kar diya gaya hai!', true);
+                return;
+            }
+        } else {
+            // Register mode
+            if(userDatabase[phone]) {
+                showToast('Ye number pehle se registered hai! Login karein.', true);
+                return;
+            }
             userDatabase[phone] = { phone: phone, balance: 0.00, banned: false };
         }
 
         currentUser = userDatabase[phone];
         updateBalanceDisplay();
 
-        showToast(currentAuthMode === 'login' ? 'Login Successful!' : 'Account Registered!');
+        showToast(currentAuthMode === 'login' ? 'Login Successful!' : 'Account Registered Successfully!');
         
         document.getElementById('view-auth').classList.add('hidden');
         document.getElementById('brand-header').classList.add('hidden');
@@ -381,12 +390,4 @@
         currentUser = null;
         document.getElementById('view-auth').classList.remove('hidden');
         document.getElementById('brand-header').classList.remove('hidden');
-        document.getElementById('app-header').classList.add('hidden');
-        document.getElementById('bottom-nav').classList.add('hidden');
-        
-        document.getElementById('view-lobby').classList.add('hidden');
-        document.getElementById('view-deposit').classList.add('hidden');
-        document.getElementById('view-withdraw').classList.add('hidden');
-        document.getElementById('view-admin').classList.add('hidden');
-        
-  
+        document.getElementById('app-header').classList.ad
