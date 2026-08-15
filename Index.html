@@ -1,96 +1,84 @@
-                    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MK 888 - Professional Login</title>
+    <title>MK 888 - Official</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #1a1a1a; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        
-        .container { width: 100%; max-width: 400px; background: #262626; border-radius: 12px; padding: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .logo-area { text-align: center; margin-bottom: 25px; }
-        .logo-area h1 { color: #f9b134; font-size: 35px; font-weight: 800; letter-spacing: 3px; }
-        
-        .tabs { display: flex; border-bottom: 2px solid #333; margin-bottom: 25px; }
-        .tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; color: #888; font-weight: bold; }
-        .tab.active { color: #f9b134; border-bottom: 3px solid #f9b134; }
-        
-        .input-group { margin-bottom: 15px; position: relative; background: #1a1a1a; padding: 12px; border-radius: 6px; border: 1px solid #444; }
-        .input-group input { width: 100%; background: transparent; border: none; color: #fff; outline: none; font-size: 14px; }
-        .input-group span { color: #aaa; font-size: 13px; margin-right: 5px; }
-        
-        .checkbox-row { font-size: 12px; color: #aaa; margin: 15px 0; display: flex; align-items: center; gap: 8px; }
-        
-        .btn-action { width: 100%; background: #f9b134; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; color: #000; font-size: 16px; margin-top: 10px; }
-        
-        .footer-links { display: flex; justify-content: space-between; margin-top: 15px; font-size: 12px; color: #f9b134; }
-        .footer-links span { cursor: pointer; }
-        
-        .quick-login { text-align: center; margin-top: 30px; }
-        .quick-login p { color: #555; font-size: 12px; margin-bottom: 15px; position: relative; }
-        .social-icons { display: flex; justify-content: center; gap: 20px; }
-        .social-icons i { font-size: 24px; color: #fff; cursor: pointer; padding: 10px; background: #333; border-radius: 50%; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #1a1a1a; color: #fff; padding-bottom: 70px; }
         .hidden { display: none; }
+        
+        /* Top Header */
+        header { background: #262626; padding: 15px; text-align: center; font-weight: bold; color: #f9b134; }
+        
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #262626; padding: 10px; border-top: 1px solid #333; }
+        .nav-item { text-align: center; font-size: 12px; color: #aaa; cursor: pointer; }
+        .nav-item.active { color: #f9b134; }
+
+        /* Content Sections */
+        .content { padding: 15px; }
+        .card { background: #262626; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        
+        /* Deposit Screen */
+        .grid-amounts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .amt-btn { background: #333; padding: 10px; border-radius: 5px; text-align: center; border: 1px solid #444; }
+        
+        /* Game Grid */
+        .game-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .game-item { background: #333; height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-area"><h1>MK 888</h1></div>
+    <header>MK 888</header>
 
-        <div class="tabs">
-            <div class="tab active" id="tab-reg" onclick="showForm('register')">Register</div>
-            <div class="tab" id="tab-log" onclick="showForm('login')">Login</div>
-        </div>
-
-        <!-- Register Form -->
-        <div id="form-register">
-            <div class="input-group"><span>+92</span><input type="tel" placeholder="*Please enter Phone number"></div>
-            <div class="input-group"><input type="password" placeholder="*Enter password"></div>
-            <div class="input-group"><input type="password" placeholder="*Enter password again"></div>
-            <button class="btn-action">Register</button>
-        </div>
-
-        <!-- Login Form -->
-        <div id="form-login" class="hidden">
-            <div class="input-group"><span>+92</span><input type="tel" placeholder="*Please enter Phone number"></div>
-            <div class="input-group"><input type="password" placeholder="*Enter password"></div>
-            <div class="checkbox-row"><input type="checkbox" checked> Remember account password</div>
-            <button class="btn-action">Login</button>
-            <div class="footer-links">
-                <span>Customer Service</span>
-                <span>Demo</span>
-                <span>Forgot Password</span>
-            </div>
-        </div>
-
-        <div class="quick-login">
-            <p>Quick login</p>
-            <div class="social-icons">
-                <i class="fas fa-fingerprint"></i>
-                <i class="fab fa-google"></i>
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-telegram"></i>
-            </div>
+    <!-- Home View -->
+    <div id="view-home" class="content">
+        <div class="card">Welcome! Balance: <b>Rs 15.41</b></div>
+        <h3>Hot Games</h3>
+        <div class="game-grid" style="margin-top:10px;">
+            <div class="game-item">Slots</div>
+            <div class="game-item">Cards</div>
+            <div class="game-item">Crash</div>
         </div>
     </div>
 
+    <!-- Deposit View -->
+    <div id="view-deposit" class="content hidden">
+        <h3>Deposit Amount</h3>
+        <div class="grid-amounts">
+            <div class="amt-btn">150</div>
+            <div class="amt-btn">500</div>
+            <div class="amt-btn">1000</div>
+            <div class="amt-btn">5000</div>
+        </div>
+        <button style="width:100%; padding:15px; margin-top:20px; background:#f9b134; border:none; border-radius:5px;">Confirm Deposit</button>
+    </div>
+
+    <!-- Profile View -->
+    <div id="view-profile" class="content hidden">
+        <div class="card">VIP Level: V1 <br> Next Level: 10.00</div>
+        <div class="card">My Records</div>
+        <div class="card">Security Center</div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showView('home')"><i class="fas fa-home"></i><br>Home</div>
+        <div class="nav-item" onclick="showView('deposit')"><i class="fas fa-wallet"></i><br>Deposit</div>
+        <div class="nav-item" onclick="showView('profile')"><i class="fas fa-user"></i><br>Profile</div>
+    </div>
+
     <script>
-        function showForm(type) {
-            if(type === 'register') {
-                document.getElementById('form-register').classList.remove('hidden');
-                document.getElementById('form-login').classList.add('hidden');
-                document.getElementById('tab-reg').classList.add('active');
-                document.getElementById('tab-log').classList.remove('active');
-            } else {
-                document.getElementById('form-login').classList.remove('hidden');
-                document.getElementById('form-register').classList.add('hidden');
-                document.getElementById('tab-log').classList.add('active');
-                document.getElementById('tab-reg').classList.remove('active');
-            }
+        function showView(viewName) {
+            document.querySelectorAll('.content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
