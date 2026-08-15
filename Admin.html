@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK KING - Admin Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #0d1117; color: #c9d1d9; padding: 20px; }
+        h1 { color: #58a6ff; margin-bottom: 20px; text-align: center; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #30363d; padding: 10px; text-align: left; font-size: 13px; }
+        th { background: #21262d; color: #58a6ff; }
+        .btn-approve { background: #238636; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-reject { background: #da3633; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>👑 MK KING - Admin Control Panel</h1>
+
+    <div class="card">
+        <h3>📥 Pending Deposit Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Phone</th>
+                    <th>Amount (Rs)</th>
+                    <th>Sender Mobile</th>
+                    <th>TRX ID</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="depositTable"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>👥 Registered Users & Balances</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Mobile</th>
+                    <th>Balance (Rs)</th>
+                </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function renderData() {
+            let requests = JSON.parse(localStorage.getItem('mk_deposit_requests')) || [];
+            let users = JSON.parse(localStorage.getItem('mk_all_users')) || [];
+
+            let depHTML = '';
+            requests.forEach((req, index) => {
+                depHTML += `<tr>
+                    <td>${req.user}</td>
+                    <td>${req.amt}</td>
+                    <td>${req.sender}</td>
+                    <td>${req.trx}</td>
+                    <td><b style="color:${req.status==='Approved'?'#00ff66':req.status==='Rejected'?'#ff3333':'#ffd700'}">${req.status}</b></td>
+                    <td>
+                        ${req.status === 'Pending' ? `
+                            <button class="btn-approve" onclick="approveDep(${index})">Approve</button>
+                            <button class="btn-reject" onclick="rejectDep(${index})">Reject</button>
+                        ` : 'Completed'}
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('depositTable').innerHTML = depHTML || '<tr><td colspan="6">No deposit requests yet.</td></tr>';
+
+            let userHTML = '';
+            users.forEach(u => {
+                userHTML += `<tr><td>${u.phone}</td><td>Rs ${parseFloat(u.balance).toFixed(2)}</td></tr>`;
+            });
+            document.getElementById('userTable').innerHTML = userHTML || '<tr><td colspan="2">No registered users yet.</td></tr>';
+        }
+
+        function approveDep(index) {
+            let requests = JSON.parse(localStorage.getItem('mk_deposit_requests')) || [];
+            let users = JSON.parse(localStorage.getItem('mk_all_users')) || [];
+            let req = requests[index];
+
+            req.status = 'Approved';
+            let userObj = users.find(u => u.phone === req.user);
+            if(userObj) {
+                userObj.balance += req.amt;
+            }
+
+            localStorage.setItem('mk_deposit_requests', JSON.stringify(requests));
+            localStorage.setItem('mk_all_users', JSON.stringify(users));
+
+            let currentUser = JSON.parse(localStorage.getItem('mk_user'));
+            if(currentUser && currentUser.phone === req.user) {
+                currentUser.balance += req.amt;
+                localStorage.setItem('mk_user', JSON.stringify(currentUser));
+            }
+
+            renderData();
+            alert('Deposit Approved! User wallet balance updated.');
+        }
+
+        function rejectDep(index) {
+            let requests = JSON.parse(localStorage.getItem('mk_deposit_requests')) || [];
+            requests[index].status = 'Rejected';
+            localStorage.setItem('mk_deposit_requests', JSON.stringify(requests));
+            renderData();
+            alert('Deposit Request Rejected.');
+        }
+
+        renderData();
+    </script>
+</body>
+</html>
