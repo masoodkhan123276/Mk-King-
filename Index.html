@@ -3,346 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MK 888 - Casino & Gaming App</title>
+    <title>MK 888 - Official Gaming Platform</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #f9b134;
+            --text-color: #ffffff;
+            --danger-color: #ff4d4d;
+            --success-color: #2ecc71;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #121212; color: #ffffff; min-height: 100vh; font-size: 14px; user-select: none; }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; justify-content: center; }
         .hidden { display: none !important; }
 
-        /* ================= AUTH SECTION ================= */
-        #auth-container {
-            width: 100%;
-            max-width: 420px;
-            margin: 30px auto;
-            background: #1e1e1e;
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid #2d2d2d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        }
-        .logo-area { text-align: center; margin-bottom: 20px; }
-        .logo-area h1 { color: #f9b134; font-size: 36px; font-weight: 800; letter-spacing: 2px; }
-        .logo-area p { color: #888; font-size: 12px; margin-top: 4px; }
+        .app-container { width: 100%; max-width: 480px; background: var(--bg-color); min-height: 100vh; position: relative; padding-bottom: 70px; border-left: 1px solid #222; border-right: 1px solid #222; }
 
-        .auth-tabs { display: flex; border-bottom: 2px solid #2d2d2d; margin-bottom: 20px; }
-        .auth-tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; color: #888; font-weight: bold; font-size: 16px; position: relative; }
-        .auth-tab.active { color: #f9b134; border-bottom: 3px solid #f9b134; }
-        .auth-tab .badge { position: absolute; top: 2px; right: 15px; background: #e74c3c; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
+        /* Header */
+        .app-header { background: var(--card-bg); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 20px; font-weight: bold; color: var(--accent-color); }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .balance-box { background: #2a2a2a; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--accent-color); font-size: 14px; }
 
-        .input-group { margin-bottom: 15px; background: #121212; padding: 12px 15px; border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; gap: 10px; }
-        .input-group span { color: #f9b134; font-weight: bold; }
-        .input-group input { width: 100%; background: transparent; border: none; color: #fff; outline: none; font-size: 14px; }
+        /* Auth Container */
+        .auth-box { padding: 30px 20px; }
+        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #333; }
+        .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #888; font-weight: bold; }
+        .auth-tab.active { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); }
+        
+        .input-group { background: #1a1a1a; padding: 12px 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; gap: 10px; }
+        .input-group i { color: var(--accent-color); }
+        .input-group input, .input-group select { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 15px; }
 
-        .terms-row { font-size: 11px; color: #aaa; margin: 15px 0; display: flex; align-items: center; gap: 8px; }
-        .terms-row input { accent-color: #f9b134; }
+        .btn-primary { width: 100%; padding: 14px; background: var(--accent-color); border: none; border-radius: 8px; font-weight: bold; color: #000; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .btn-danger { background: var(--danger-color); color: white; }
+        .btn-success { background: var(--success-color); color: white; }
 
-        .btn-main { width: 100%; background: linear-gradient(180deg, #f9b134 0%, #e09200 100%); border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000; font-size: 16px; margin-top: 10px; transition: 0.2s; }
-        .btn-main:active { transform: scale(0.98); }
+        /* Main View Modules */
+        .view-section { padding: 15px; }
 
-        .auth-footer-links { display: flex; justify-content: space-between; margin-top: 15px; font-size: 12px; color: #f9b134; }
-        .auth-footer-links span { cursor: pointer; }
+        /* Games Lobby */
+        .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .game-card { background: var(--card-bg); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
+        .game-card:hover { border-color: var(--accent-color); transform: translateY(-3px); }
+        .game-card i { font-size: 40px; color: var(--accent-color); margin-bottom: 10px; }
 
-        .quick-login { text-align: center; margin-top: 25px; border-top: 1px solid #2d2d2d; padding-top: 20px; }
-        .quick-login p { color: #666; font-size: 12px; margin-bottom: 15px; }
-        .social-icons { display: flex; justify-content: center; gap: 18px; }
-        .social-icons i { font-size: 20px; color: #fff; padding: 12px; background: #2a2a2a; border-radius: 50%; cursor: pointer; border: 1px solid #3a3a3a; }
+        /* Aviator Game Screen */
+        .game-display { background: #000; height: 220px; border-radius: 12px; border: 1px solid #333; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+        .multiplier { font-size: 45px; font-weight: bold; color: var(--accent-color); }
+        .crash-msg { color: var(--danger-color); font-weight: bold; margin-top: 10px; }
 
-        /* ================= DASHBOARD SECTION ================= */
-        #dashboard-container { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; background: #121212; padding-bottom: 75px; position: relative; }
+        /* Slots Game Screen */
+        .slots-display { display: flex; justify-content: center; gap: 15px; font-size: 40px; background: #000; padding: 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px; }
 
-        header.app-header { background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #292929; position: sticky; top: 0; z-index: 100; }
-        header.app-header .brand { color: #f9b134; font-size: 22px; font-weight: bold; }
-        header.app-header .wallet-badge { background: #2a2a2a; border: 1px solid #f9b134; padding: 6px 12px; border-radius: 20px; color: #f9b134; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+        /* Payment Forms */
+        .payment-card { background: var(--card-bg); padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; }
 
-        .banner-box { background: linear-gradient(135deg, #2c1f0d 0%, #1e1e1e 100%); border: 1px solid #f9b134; border-radius: 12px; padding: 15px; margin: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .banner-box h4 { color: #f9b134; font-size: 15px; }
-        .banner-box p { color: #ccc; font-size: 11px; margin-top: 4px; }
-        .banner-box .btn-claim { background: #f9b134; color: #000; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
-
-        .category-tabs { display: flex; gap: 10px; overflow-x: auto; padding: 0 15px 10px 15px; }
-        .cat-chip { background: #1e1e1e; border: 1px solid #333; padding: 8px 14px; border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; color: #aaa; }
-        .cat-chip.active { background: #f9b134; color: #000; font-weight: bold; border-color: #f9b134; }
-
-        .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; }
-        .game-card { background: #1e1e1e; border-radius: 10px; overflow: hidden; border: 1px solid #2a2a2a; text-align: center; padding: 10px 5px; cursor: pointer; transition: 0.2s; }
-        .game-card:hover { border-color: #f9b134; transform: translateY(-2px); }
-        .game-card i { font-size: 32px; color: #f9b134; margin-bottom: 8px; display: block; }
-        .game-card .title { font-size: 12px; font-weight: bold; color: #ddd; }
-        .game-card .tag { font-size: 9px; background: #e74c3c; color: #fff; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
-
-        /* ================= DEPOSIT SCREEN ================= */
-        .deposit-section { padding: 15px; }
-        .payment-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-        .pay-card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; color: #aaa; font-weight: bold; }
-        .pay-card.active { border-color: #27ae60; background: #182b1d; color: #27ae60; }
-
-        .amount-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .amount-btn { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; }
-        .amount-btn .amt { font-size: 16px; font-weight: bold; color: #fff; }
-        .amount-btn .bonus { font-size: 10px; color: #f9b134; margin-top: 2px; }
-
-        /* ================= PROFILE SCREEN ================= */
-        .profile-section { padding: 15px; }
-        .vip-card { background: linear-gradient(135deg, #27ae60 0%, #11502b 100%); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
-        .vip-card h3 { font-size: 20px; margin-bottom: 8px; }
-        .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; overflow: hidden; margin: 10px 0; }
-        .progress-fill { background: #fff; height: 100%; width: 45%; }
-
-        .profile-menu { background: #1e1e1e; border-radius: 12px; border: 1px solid #2a2a2a; overflow: hidden; }
-        .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid #2a2a2a; cursor: pointer; color: #ccc; }
-        .menu-item:last-child { border-bottom: none; }
-        .menu-item i { color: #f9b134; margin-right: 10px; }
-
-        /* ================= BOTTOM NAV ================= */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #1e1e1e; border-top: 1px solid #2a2a2a; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; }
-        .nav-item { text-align: center; color: #777; cursor: pointer; font-size: 11px; flex: 1; }
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: var(--card-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 100; }
+        .nav-item { text-align: center; color: #888; cursor: pointer; font-size: 12px; }
         .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
-        .nav-item.active { color: #f9b134; font-weight: bold; }
+        .nav-item.active { color: var(--accent-color); }
+
+        /* Admin Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+        th { background: #252525; color: var(--accent-color); }
     </style>
 </head>
 <body>
 
-    <!-- 1. AUTHENTICATION (LOGIN & REGISTER) -->
-    <div id="auth-container">
-        <div class="logo-area">
-            <h1>MK 888</h1>
-            <p>Official Online Gaming Platform</p>
-        </div>
+<div class="app-container">
 
+    <!-- HEADER -->
+    <div class="app-header hidden" id="app-header">
+        <div class="logo"><i class="fa-solid fa-gamepad"></i> MK 888</div>
+        <div class="user-info">
+            <div class="balance-box">Rs <span id="user-balance">0.00</span></div>
+            <button onclick="logout()" style="background:none; border:none; color:#888; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </div>
+
+    <!-- AUTH SECTION -->
+    <div id="auth-section" class="auth-box">
+        <h2 style="text-align: center; color: var(--accent-color); margin-bottom: 20px;">MK 888 Portal</h2>
         <div class="auth-tabs">
-            <div class="auth-tab active" id="tab-reg-btn" onclick="switchAuthTab('register')">
-                Register <span class="badge">Rs 100</span>
-            </div>
-            <div class="auth-tab" id="tab-log-btn" onclick="switchAuthTab('login')">
-                Login
-            </div>
+            <div class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Login</div>
+            <div class="auth-tab" id="tab-register" onclick="switchAuth('register')">Register</div>
         </div>
 
-        <!-- FORM INPUTS -->
-        <form onsubmit="handleAuthSubmit(event)">
-            <div class="input-group">
-                <span>+92</span>
-                <input type="tel" id="auth-phone" placeholder="Enter Phone number" required pattern="[0-9]{10,11}">
-            </div>
-
-            <div class="input-group">
-                <i class="fas fa-lock" style="color:#f9b134;"></i>
-                <input type="password" id="auth-pass" placeholder="Enter password" required>
-            </div>
-
-            <!-- REGISTER SPECIFIC FIELD -->
-            <div id="repass-group" class="input-group">
-                <i class="fas fa-lock" style="color:#f9b134;"></i>
-                <input type="password" id="auth-repass" placeholder="Enter password again">
-            </div>
-
-            <!-- CHECKBOXES -->
-            <div class="terms-row" id="reg-terms">
-                <input type="checkbox" id="terms-chk" checked required>
-                <label for="terms-chk">I am over 18 years old and agree to User Agreement</label>
-            </div>
-
-            <div class="terms-row hidden" id="log-terms">
-                <input type="checkbox" id="remember-chk" checked>
-                <label for="remember-chk">Remember account password</label>
-            </div>
-
-            <button type="submit" class="btn-main" id="auth-submit-btn">Register</button>
-        </form>
-
-        <div class="auth-footer-links hidden" id="login-footer">
-            <span>Customer Service</span>
-            <span>Demo Account</span>
-            <span>Forgot Password?</span>
+        <div class="input-group">
+            <i class="fa-solid fa-phone"></i>
+            <input type="tel" id="auth-phone" placeholder="Phone Number (e.g. 03001234567)">
+        </div>
+        <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="auth-pass" placeholder="Password">
         </div>
 
-        <div class="quick-login">
-            <p>Quick login with</p>
-            <div class="social-icons">
-                <i class="fas fa-fingerprint" style="color:#f9b134;"></i>
-                <i class="fab fa-google" style="color:#db4437;"></i>
-                <i class="fab fa-facebook" style="color:#4267B2;"></i>
-                <i class="fab fa-telegram" style="color:#0088cc;"></i>
+        <button class="btn-primary" id="auth-submit-btn" onclick="handleAuth()">Login</button>
+    </div>
+
+    <!-- DASHBOARD / GAMES LOBBY -->
+    <div id="view-lobby" class="view-section hidden">
+        <h3>Game Lobby</h3>
+        <p style="color:#888; font-size: 13px; margin-bottom: 15px;">Select a game to start playing</p>
+        
+        <div class="games-grid">
+            <div class="game-card" onclick="openGame('aviator')">
+                <i class="fa-solid fa-plane-departure"></i>
+                <h4>Aviator</h4>
+                <p style="font-size:11px; color:#888;">Crash Multiplier</p>
+            </div>
+            <div class="game-card" onclick="openGame('slots')">
+                <i class="fa-solid fa-cubes"></i>
+                <h4>Lucky Slots</h4>
+                <p style="font-size:11px; color:#888;">Spin & Win</p>
             </div>
         </div>
     </div>
 
-
-    <!-- 2. MAIN DASHBOARD (USER LOBBY) -->
-    <div id="dashboard-container" class="hidden">
-        <!-- HEADER -->
-        <header class="app-header">
-            <div class="brand">MK 888</div>
-            <div class="wallet-badge">
-                <i class="fas fa-coins"></i> Rs <span id="user-balance">100.00</span>
-            </div>
-        </header>
-
-        <!-- TAB 1: HOME -->
-        <div id="tab-view-home" class="view-content">
-            <div class="banner-box">
-                <div>
-                    <h4>Daily Share Reward</h4>
-                    <p>Invite friends and get bonus up to Rs 666</p>
-                </div>
-                <button class="btn-claim" onclick="switchView('deposit')">Deposit</button>
-            </div>
-
-            <div class="category-tabs">
-                <div class="cat-chip active"><i class="fas fa-fire"></i> Hot</div>
-                <div class="cat-chip"><i class="fas fa-gamepad"></i> Mini Games</div>
-                <div class="cat-chip"><i class="fas fa-dice"></i> Slot</div>
-                <div class="cat-chip"><i class="fas fa-spade"></i> Cards</div>
-            </div>
-
-            <div class="games-grid">
-                <div class="game-card" onclick="launchGame('Crash')">
-                    <i class="fas fa-rocket"></i>
-                    <div class="title">Crash</div>
-                    <div class="tag">HOT</div>
-                </div>
-                <div class="game-card" onclick="launchGame('Dragon Tiger')">
-                    <i class="fas fa-dragon"></i>
-                    <div class="title">Dragon Tiger</div>
-                    <div class="tag">POPULAR</div>
-                </div>
-                <div class="game-card" onclick="launchGame('Crazy777')">
-                    <i class="fas fa-crown"></i>
-                    <div class="title">Crazy 777</div>
-                    <div class="tag">SLOT</div>
-                </div>
-                <div class="game-card" onclick="launchGame('Mines')">
-                    <i class="fas fa-bomb"></i>
-                    <div class="title">Mines</div>
-                    <div class="tag">SPRIBE</div>
-                </div>
-                <div class="game-card" onclick="launchGame('Chicken Road')">
-                    <i class="fas fa-drumstick-bite"></i>
-                    <div class="title">Chicken Road</div>
-                    <div class="tag">NEW</div>
-                </div>
-                <div class="game-card" onclick="launchGame('Andar Bahar')">
-                    <i class="fas fa-clone"></i>
-                    <div class="title">Andar Bahar</div>
-                    <div class="tag">CARDS</div>
-                </div>
-            </div>
+    <!-- GAME: AVIATOR -->
+    <div id="view-aviator" class="view-section hidden">
+        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent-color); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
+        <div class="game-display">
+            <div class="multiplier" id="aviator-mult">1.00x</div>
+            <div class="crash-msg hidden" id="aviator-status">CRASHED!</div>
         </div>
 
-        <!-- TAB 2: PROMO -->
-        <div id="tab-view-promo" class="view-content hidden">
-            <div style="padding:15px;">
-                <h3 style="color:#f9b134; margin-bottom:15px;">Promotions & Events</h3>
-                <div class="banner-box" style="margin: 0 0 15px 0;">
-                    <div>
-                        <h4>New Member Bonus</h4>
-                        <p>First deposit bonus up to Rs 66,666</p>
-                    </div>
-                </div>
-                <div class="banner-box" style="margin: 0 0 15px 0; border-color:#27ae60;">
-                    <div>
-                        <h4>Daily Wheel Spin</h4>
-                        <p>Free spins every 24 hours</p>
-                    </div>
-                </div>
+        <div style="margin-top: 15px;">
+            <div class="input-group">
+                <i class="fa-solid fa-coins"></i>
+                <input type="number" id="aviator-bet" placeholder="Bet Amount (Rs)">
             </div>
-        </div>
-
-        <!-- TAB 3: INVITE -->
-        <div id="tab-view-invite" class="view-content hidden">
-            <div style="padding:15px; text-align:center;">
-                <h3 style="color:#f9b134;">Invite Friends & Earn</h3>
-                <p style="color:#aaa; font-size:12px; margin:10px 0 20px 0;">Get lifetime commission from player bets!</p>
-                <div style="background:#1e1e1e; padding:15px; border-radius:10px; border:1px solid #333;">
-                    <p style="font-size:12px; color:#888;">Your Referral Link:</p>
-                    <p style="color:#f9b134; font-weight:bold; margin:8px 0;" id="ref-link">https://mk-king-app.netlify.app/?ref=1001</p>
-                    <button class="btn-main" style="padding:8px;" onclick="navigator.clipboard.writeText('https://mk-king-app.netlify.app/?ref=1001'); alert('Copied Link!');">Copy Link</button>
-                </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary btn-success" id="btn-aviator-start" onclick="startAviator()">Place Bet</button>
+                <button class="btn-primary" id="btn-aviator-cash" onclick="cashoutAviator()" disabled>Cashout</button>
             </div>
-        </div>
-
-        <!-- TAB 4: DEPOSIT -->
-        <div id="tab-view-deposit" class="view-content hidden">
-            <div class="deposit-section">
-                <h3 style="margin-bottom:15px;">Online Deposit</h3>
-                
-                <div class="payment-methods">
-                    <div class="pay-card active"><i class="fas fa-mobile-alt"></i> JazzCash</div>
-                    <div class="pay-card"><i class="fas fa-wallet"></i> Easypaisa</div>
-                </div>
-
-                <p style="color:#aaa; font-size:12px; margin-bottom:8px;">Select Deposit Amount:</p>
-                <div class="amount-grid">
-                    <div class="amount-btn"><div class="amt">Rs 150</div><div class="bonus">+Rs 20 Bonus</div></div>
-                    <div class="amount-btn"><div class="amt">Rs 500</div><div class="bonus">+Rs 50 Bonus</div></div>
-                    <div class="amount-btn"><div class="amt">Rs 1,000</div><div class="bonus">+Rs 120 Bonus</div></div>
-                    <div class="amount-btn"><div class="amt">Rs 5,000</div><div class="bonus">+Rs 650 Bonus</div></div>
-                </div>
-
-                <button class="btn-main" style="margin-top:25px;" onclick="alert('Deposit request submitted! Please send payment to 03213699372 (SadaPay)')">Deposit Now</button>
-            </div>
-        </div>
-
-        <!-- TAB 5: PROFILE -->
-        <div id="tab-view-profile" class="view-content hidden">
-            <div class="profile-section">
-                <div class="vip-card">
-                    <h3>VIP 1 Level</h3>
-                    <p style="font-size:12px;">Next Level Bonus: Rs 10.00</p>
-                    <div class="progress-bar"><div class="progress-fill"></div></div>
-                    <p style="font-size:10px;">Deposit 900.00/1,000.00 to reach VIP 2</p>
-                </div>
-
-                <div class="profile-menu">
-                    <div class="menu-item"><div><i class="fas fa-receipt"></i> My Records</div><i class="fas fa-chevron-right"></i></div>
-                    <div class="menu-item"><div><i class="fas fa-university"></i> Manage Withdrawal</div><i class="fas fa-chevron-right"></i></div>
-                    <div class="menu-item"><div><i class="fas fa-shield-alt"></i> Security Center</div><i class="fas fa-chevron-right"></i></div>
-                    <div class="menu-item"><div><i class="fas fa-headset"></i> Customer Service</div><i class="fas fa-chevron-right"></i></div>
-                    <div class="menu-item" onclick="logoutUser()"><div style="color:#e74c3c;"><i class="fas fa-sign-out-alt" style="color:#e74c3c;"></i> Quit / Logout</div><i class="fas fa-chevron-right"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BOTTOM NAVIGATION -->
-        <div class="bottom-nav">
-            <div class="nav-item active" id="nav-home" onclick="switchView('home')"><i class="fas fa-home"></i>Home</div>
-            <div class="nav-item" id="nav-promo" onclick="switchView('promo')"><i class="fas fa-gift"></i>Promo</div>
-            <div class="nav-item" id="nav-invite" onclick="switchView('invite')"><i class="fas fa-users"></i>Invite</div>
-            <div class="nav-item" id="nav-deposit" onclick="switchView('deposit')"><i class="fas fa-wallet"></i>Deposit</div>
-            <div class="nav-item" id="nav-profile" onclick="switchView('profile')"><i class="fas fa-user"></i>Profile</div>
         </div>
     </div>
 
-    <!-- SCRIPT LOGIC -->
-    <script>
-        let currentAuthMode = 'register';
+    <!-- GAME: SLOTS -->
+    <div id="view-slots" class="view-section hidden">
+        <button onclick="showView('lobby')" style="background:none; border:none; color:var(--accent-color); margin-bottom:10px; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Lobby</button>
+        
+        <div class="slots-display">
+            <span id="slot1">🎰</span>
+            <span id="slot2">🎰</span>
+            <span id="slot3">🎰</span>
+        </div>
 
-        // 1. Check on startup if already logged in
-        window.onload = function() {
-            if(localStorage.getItem('mk888_logged_in') === 'true') {
-                showDashboard();
+        <div class="input-group">
+            <i class="fa-solid fa-coins"></i>
+            <input type="number" id="slots-bet" placeholder="Bet Amount (Rs)">
+        </div>
+        <button class="btn-primary" onclick="spinSlots()">Spin Wheel</button>
+    </div>
+
+    <!-- DEPOSIT SECTION -->
+    <div id="view-deposit" class="view-section hidden">
+        <h3>Deposit Funds</h3>
+        <div class="payment-card" style="margin-top:10px;">
+            <p style="font-size:13px; color:#aaa;">Send Deposit to Account:</p>
+            <p style="font-weight:bold; margin-top:5px; color:var(--accent-color);">JazzCash / EasyPaisa: 0300-1234567</p>
+            <p style="font-size:12px; color:#aaa;">Title: MK Gaming Official</p>
+        </div>
+
+        <div class="input-group">
+            <select id="dep-method">
+                <option value="EasyPaisa">EasyPaisa</option>
+                <option value="JazzCash">JazzCash</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <i class="fa-solid fa-money-bill"></i>
+            <input type="number" id="dep-amount" placeholder="Deposit Amount">
+        </div>
+        <div class="input-group">
+            <i class="fa-solid fa-receipt"></i>
+            <input type="text" id="dep-trx" placeholder="TRX ID / Reference Number">
+        </div>
+        <button class="btn-primary" onclick="submitDeposit()">Submit Deposit Request</button>
+    </div>
+
+    <!-- WITHDRAW SECTION -->
+    <div id="view-withdraw" class="view-section hidden">
+        <h3>Withdraw Funds</h3>
+        <div class="input-group" style="margin-top:15px;">
+            <select id="with-method">
+                <option value="EasyPaisa">EasyPaisa</option>
+                <option value="JazzCash">JazzCash</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="with-account" placeholder="Account Number">
+        </div>
+        <div class="input-group">
+            <i class="fa-solid fa-money-bill"></i>
+            <input type="number" id="with-amount" placeholder="Withdraw Amount">
+        </div>
+        <button class="btn-primary" onclick="submitWithdraw()">Request Withdrawal</button>
+    </div>
+
+    <!-- ADMIN PANEL VIEW -->
+    <div id="view-admin" class="view-section hidden">
+        <h3>Admin Management Panel</h3>
+        <p style="font-size:12px; color:#888;">Approve/Reject User Deposit Requests</p>
+        
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Method</th>
+                        <th>Amount</th>
+                        <th>TRX</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-req-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav hidden" id="bottom-nav">
+        <div class="nav-item active" onclick="showView('lobby')">
+            <i class="fa-solid fa-house"></i>Home
+        </div>
+        <div class="nav-item" onclick="showView('deposit')">
+            <i class="fa-solid fa-wallet"></i>Deposit
+        </div>
+        <div class="nav-item" onclick="showView('withdraw')">
+            <i class="fa-solid fa-money-bill-transfer"></i>Withdraw
+        </div>
+        <div class="nav-item" id="nav-admin-btn" onclick="showView('admin')">
+            <i class="fa-solid fa-user-shield"></i>Admin
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // System Local Database Initialization
+    function getDB(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }
+    function setDB(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+
+    let currentMode = 'login';
+    let activeUser = null;
+    let aviatorInterval = null;
+    let currentMultiplier = 1.00;
+    let isAviatorRunning = false;
+
+    // Authentication Switching
+    function switchAuth(mode) {
+        currentMode = mode;
+        document.getElementById('tab-login').className = mode === 'login' ? 'auth-tab active' : 'auth-tab';
+        document.getElementById('tab-register').className = mode === 'register' ? 'auth-tab active' : 'auth-tab';
+        document.getElementById('auth-submit-btn').innerText = mode === 'login' ? 'Login' : 'Register';
+    }
+
+    function handleAuth() {
+        const phone = document.getElementById('auth-phone').value.trim();
+        const pass = document.getElementById('auth-pass').value.trim();
+        if(!phone || !pass) return alert('Please enter phone and password');
+
+        let users = getDB('mk_users');
+
+        if(currentMode === 'register') {
+            if(users.find(u => u.phone === phone)) {
+                return alert('Account already exists! Please Login.');
             }
-        };
-
-        // 2. Switch Auth Tabs (Register / Login)
-        function switchAuthTab(mode) {
-            currentAuthMode = mode;
-            if(mode === 'register') {
-                document.getElementById('tab-reg-btn').classList.add('active');
-                document.getElementById('tab-log-btn').classList.remove('active');
-                document.getElementById('repass-group').classList.remove('hidden');
-                document.getElementById('reg-terms').classList.remove('hidden');
-                document.getElementById('log-terms').classList.add('hidden');
-                document.getElementById('login-footer').classList.add('hidden');
-                document.getElementById('auth-submit-btn').innerText = 'Register';
+            users.push({ phone, pass, balance: 100, role: phone === '03000000000' ? 'admin' : 'user' });
+            setDB('mk_users', users);
+            alert('Registration Successful! Signup Bonus: Rs 100. Please Login.');
+            switchAuth('login');
+        } else {
+            const user = users.find(u => u.phone === phone && u.pass === pass);
+            if(user) {
+                localStorage.setItem('mk_session', phone);
+                initApp();
             } else {
-                document.getElementById('tab-log-btn').classList.add('active');
-                document.getElementById('tab-reg-btn').classList.remove('active');
-                document.getElementById('repass-group').classList.add('hidden');
-                document.getElementById('reg-terms').classList.add('hidden');
-                document.getElementById('log-terms').classList.remove('hidden');
-                document.getElementById('login-footer').classList.remove('hidden');
-                document.getElementById('auth-submit-btn').innerText = 'Login';
+                alert('Invalid Credentials!');
             }
-    
+        }
+    }
+
+    function initApp() {
+        const session = localStorage.getItem('mk_session');
+        if(!session) return;
+
+        let users = getDB('mk_users');
+        activeUser = users.find(u => u.phone === session);
+
+        if(!activeUser) return logout();
+
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('app-header').classList.remove('hidden');
+        document.getElementById('bottom-nav').classList.remove('hidden');
+        
+        updateUserUI();
+        showView('lobby');
+    }
+
+    function updateUserUI() {
+        let users = getDB('mk_users');
+        activeUser = users.find(u => u.phone === activeUser.phone);
+        document.getElementById('user-balance').innerText = parseFloat(activeUser.balance).toFixed(2);
+        
+        if(activeUser.role === 'admin') {
+            document.getElementById('nav-admin-btn').classList.remove('hidden');
+        } else {
+            document.getElementById('nav-admin-btn').classList.add('hidden');
+        }
+    }
+
+    function showView(viewName) {
+        const views = ['lobby', 'aviator', 'slots', 'deposit', 'withdraw', 'admin'];
+        views.forEach(v => {
+            const el = document.getElementById(`view-${v}`);
+            if(el) el.classList.add('hidden');
+        });
+
+        document.getElementById(`view-${viewName}`).classList.remove('hidden');
+
+        if(viewName === 'admin') loadAdminPanel();
+    }
+
+    function logout() {
+        localStorage.removeItem('mk_session');
+        location.reload();
+    }
+
+    /* --- AVIATOR GAME LOGIC --- */
+    function openGame(game) {
+        showView(game);
+    }
+
+    function startAviator() {
+        const betInput = document.getElementById('aviator-bet');
+        const bet = parseFloat(betInput.value);
+
+        if(!bet || bet <= 0 || bet > activeUser.balance) return alert('Invalid Bet Amount!');
+
+        // Deduct Bet
+        updateBalance(-bet);
+
+        isAviatorRunning = true;
+        currentMultiplier = 1.00;
+        document.getElementById('aviator-status').classList.add('hidden');
+        document.getElementById('btn-aviator-start').disabled = true;
+        document.getElementById('btn-aviator-cash').disabled = false;
+
+        const crashPoint = (Math.random() * 4 + 1).toFixed(2);
+
+        aviatorInterval = setInterval(() => {
+            currentMultiplier += 0.05;
+            document.getElementById('aviator-mult').innerText = currentMultiplier.toFixed(2) + 'x';
+
+            if(currentMultiplier >= crashPoint) {
+                clearInterval(aviatorInterval);
+                isAviatorRunning = false;
+                document.getElementById('aviator-status').classList.remove('hidden');
+                document.getElementById('btn-aviator-start').disabled = false;
+                document.getElementById('btn-aviator-cash').disabled = true;
+            }
+        }, 150);
+    }
+
+    function cashoutAviator() {
+        if(!isAviatorRunning) return;
+
+        clearInterval(aviatorInterval);
+        isAviatorRunning = false;
+
+        const winAmount = parseFloat(document.getElementById('aviator-bet').value) * currentMultiplier;
+        updateBalance(winAmount);
+
+        alert(`Cashed out at ${currentMultiplier.toFixed(2)}x! Won: Rs ${winAmount.toFixed(2)}`);
+        document.getElementById('btn-aviator-start').disabled = false;
+        document.getElementById('btn-aviator-cash').disabled = true;
+    }
+
+    /* --- SLOTS GAME LOGIC --- */
+    function spinSlots() {
+        const bet = parseFloat(document.getElementById('slots-bet').value);
+        if(!bet || bet <= 0 || bet > activeUser.balance) return alert('Invalid Bet Amount!');
+
+        updateBalance(-bet);
+
+        const icons = ['🍎', '🍋', '🔔', '7️⃣', '💎'];
+        const r1 = icons[Math.floor(Math.random() * icons.length)];
+        const r2 = icons[Math.floor(Math.random() * icons.length)];
+        const r3 = icons[Math.floor(Math.random() * icons.length)];
+
+        document.getElementById('slot1').innerText = r1;
+        document.getElementById('slot2').innerText = r2;
+        document.getElementById('slot3').innerText = r3;
+
+        if(r1 === r2 && r2 === r3) {
+            const win = bet * 5;
+            updateBalance(win);
+            alert(`JACKPOT! You won Rs ${win}`);
+        } else if(r1 === r2 || r2 === r3 || r1 === r3) {
+            const win = bet * 1.5;
+            updateBalance(win);
+            alert(`2 Matches! You won Rs ${win}`);
+        }
+    }
+
+    /* --- BALANCE MANAGEMENT --- */
+    function updateBalance(amount) {
+        let users = getDB('mk_users');
+        const idx = users.findIndex(u => u.phone === activeUser.phone);
+        users[idx].balance += amount;
+        setDB('mk_users', users);
+        updateUserUI();
+    }
+
+    /* --- DEPOSIT & WITHDRAW --- */
+    function submitDeposit() {
+        const amount = parseFloat(document.getElementById('dep-amount').value);
+        const trx = document.getElementById('dep-trx').value.trim();
+        const method = document.getElementById('dep-method').value;
+
+        if(!amount || !trx) return alert('Enter amount and TRX ID');
+
+        let reqs = getDB('mk_requests');
+        reqs.push({ id: Date.now(), user: activeUser.phone, type: 'deposit', method, amount, trx, status: 'pending' });
+        setDB('mk_requests', reqs);
+
+        alert('Deposit Request Submitted! Pending Admin Approval.');
+        document.getElementById('dep-amount').value = '';
+        document.getElementById('dep-trx').value = '';
+    }
+
+    function submitWithdraw() {
+        const amount = parseFloat(document.getElementById('with-amount').value);
+        const acc = document.getElementById('with-account').value.trim();
+        const method = document.getElementById('with-method').value;
+
+        if(!amount || amount > activeUser.balance || !acc) return alert('Invalid Request Amount or Details');
+
+        updateBalance(-amount);
+
+        let reqs = getDB('mk_requests');
+        reqs.push({ id: Date.now(), user: activeUser.phone, type: 'withdraw', method, amount, account: acc, status: 'pending' });
+ 
