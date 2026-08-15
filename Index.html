@@ -6,6 +6,8 @@
     <title>MK 888 - Pakistan Online Portal</title>
     <!-- FontAwesome Icons Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-dark: #111111;
@@ -49,7 +51,6 @@
 
         .input-label { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; display: block; }
         .input-group { background: var(--input-bg); padding: 14px 15px; margin-bottom: 16px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; position: relative; }
-        .country-flag { display: flex; align-items: center; gap: 6px; padding-right: 12px; border-right: 1px solid #3a3a3c; font-size: 14px; font-weight: bold; color: #fff; }
         .input-group i { color: #555; font-size: 16px; }
         .input-group input, .input-group select { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
 
@@ -117,23 +118,30 @@
         </div>
 
         <div class="auth-tabs">
-            <div class="auth-tab active" id="tab-register-btn" onclick="switchAuthTab('register')">REGISTER</div>
             <div class="auth-tab" id="tab-login-btn" onclick="switchAuthTab('login')">LOGIN</div>
+            <div class="auth-tab active" id="tab-register-btn" onclick="switchAuthTab('register')">REGISTER</div>
         </div>
 
         <div class="auth-card">
             <form id="auth-form" onsubmit="handleAuth(event)">
-                <span class="input-label">Phone Number</span>
+                <span class="input-label">Email Address</span>
                 <div class="input-group">
-                    <div class="country-flag">+92</div>
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" id="auth-phone" placeholder="3001234567" required>
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="auth-email" placeholder="example@gmail.com" autocomplete="email" required>
                 </div>
 
                 <span class="input-label">Password</span>
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
                     <input type="password" id="auth-password" placeholder="••••••••" required>
+                </div>
+
+                <div id="confirm-password-box">
+                    <span class="input-label">Confirm Password</span>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="auth-confirm-password" placeholder="Enter password again" minlength="6" required>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-yellow" id="auth-submit-btn">REGISTER NOW</button>
@@ -231,7 +239,7 @@
             <div class="admin-row">
                 <label>Manual Balance Adjustment</label>
                 <div style="display:flex; gap:8px;">
-                    <input type="text" id="admin-target-user" placeholder="User Phone" style="padding:8px; background:#241a3a; border:1px solid #581c87; color:#fff; border-radius:6px; flex:1; outline:none;">
+                    <input type="text" id="admin-target-user" placeholder="User Email" style="padding:8px; background:#241a3a; border:1px solid #581c87; color:#fff; border-radius:6px; flex:1; outline:none;">
                     <input type="number" id="admin-adjust-amt" placeholder="Amount" style="padding:8px; background:#241a3a; border:1px solid #581c87; color:#fff; border-radius:6px; width:80px; outline:none;">
                     <button class="btn-success" onclick="adminAdjustBalance()">Add</button>
                 </div>
@@ -268,21 +276,6 @@
                     <!-- Dynamic Requests Added via JS -->
                 </tbody>
             </table>
-
-            <!-- USER BAN & MANAGEMENT TABLE -->
-            <h4 style="color:#c084fc; margin:20px 0 8px 0;">User Ban / Unban System</h4>
-            <table class="request-table">
-                <thead>
-                    <tr>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-users-list">
-                    <!-- Dynamic User List -->
-                </tbody>
-            </table>
         </div>
     </div>
 
@@ -299,21 +292,26 @@
 <script>
     // System Configurations
     const SECRET_ADMIN_PIN = "6666"; // Secret PIN for Admin Panel
-    let currentAuthMode = 'register'; // Default mode is Register now
+    let currentAuthMode = 'register';
     let currentUser = null;
     let currentDepositMethod = 'SadaPay';
     
+    // Supabase Configuration
+    const SUPABASE_URL = "https://bbnohumtrurppcfshzwt.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJub2h1bXRydXJwcGNmc2h6d3R1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NzMyODMsImV4cCI6MjEwMjM0OTI4M30.jvw5RHXQc6ePgJ_3WJaWsOBl8uEzfa2tUnxbk5cQJ3E";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
     // Payment Accounts Database
     const paymentInfo = {
         'sadapay': { method: 'SadaPay', title: 'M Masood', number: '03213699372' },
         'easypaisa': { method: 'EasyPaisa', title: 'M Talha', number: '03454475392' }
     };
 
-    // In-Memory Database State
-    let userDatabase = {
-        '03001234567': { phone: '03001234567', balance: 500.00, banned: false }
-    };
-    
+    let userBalances = {}; // Local mapping for user balances
     let pendingDeposits = [];
     let pendingWithdrawals = [];
 
@@ -340,57 +338,59 @@
 
     function switchAuthTab(mode) {
         currentAuthMode = mode;
-        const loginTab = document.getElementById('tab-login-btn');
-        const regTab = document.getElementById('tab-register-btn');
-        const submitBtn = document.getElementById('auth-submit-btn');
+        const loginTab = document.getElementById("tab-login-btn");
+        const registerTab = document.getElementById("tab-register-btn");
+        const submitBtn = document.getElementById("auth-submit-btn");
+        const confirmBox = document.getElementById("confirm-password-box");
 
-        if(mode === 'login') {
-            loginTab.classList.add('active');
-            regTab.classList.remove('active');
-            submitBtn.innerText = 'LOGIN';
+        if (mode === "login") {
+            loginTab.classList.add("active");
+            registerTab.classList.remove("active");
+            submitBtn.innerText = "LOGIN";
+            confirmBox.style.display = "none";
         } else {
-            regTab.classList.add('active');
-            loginTab.classList.remove('active');
-            submitBtn.innerText = 'REGISTER NOW';
+            registerTab.classList.add("active");
+            loginTab.classList.remove("active");
+            submitBtn.innerText = "REGISTER NOW";
+            confirmBox.style.display = "block";
         }
     }
 
-    function handleAuth(e) {
+    async function handleAuth(e) {
         e.preventDefault();
-        const phone = document.getElementById('auth-phone').value.trim();
-        const password = document.getElementById('auth-password').value;
 
-        if(!phone || !password) {
-            showToast('All fields are required!', true);
+        const emailInput = document.getElementById("auth-email");
+        const passwordInput = document.getElementById("auth-password");
+
+        if (!emailInput || !passwordInput) {
+            showToast("Login form is not configured correctly.", true);
             return;
         }
 
-        if(currentAuthMode === 'login') {
-            if(!userDatabase[phone]) {
-                showToast('Account not found! Pehle Register karein.', true);
-                return;
-            }
-            if(userDatabase[phone].banned) {
-                showToast('Aapka account BAN kar diya gaya hai!', true);
-                return;
-            }
-        } else {
-            // Register mode
-            if(userDatabase[phone]) {
-                showToast('Ye number pehle se registered hai! Login karein.', true);
-                return;
-            }
-            userDatabase[phone] = { phone: phone, balance: 0.00, banned: false };
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            showToast("Email and password are required!", true);
+            return;
         }
 
-        currentUser = userDatabase[phone];
-        updateBalanceDisplay();
+        /* =========================
+           REGISTER
+           ========================= */
+        if (currentAuthMode === "register") {
+            const confirmInput = document.getElementById("auth-confirm-password");
 
-        showToast(currentAuthMode === 'login' ? 'Login Successful!' : 'Account Registered Successfully!');
-        
-        document.getElementById('view-auth').classList.add('hidden');
-        document.getElementById('brand-header').classList.add('hidden');
-        document.getElementById('app-header').classList.remove('hidden');
-        document.getElementById('bottom-nav').classList.remove('hidden');
-        
-        switch
+            if (!confirmInput) {
+                showToast("Confirm Password field is missing.", true);
+                return;
+            }
+
+            const confirmPassword = confirmInput.value;
+
+            if (password.length < 6) {
+                showToast("Password must be at least 6 characters.", true);
+                return;
+            }
+
+          
