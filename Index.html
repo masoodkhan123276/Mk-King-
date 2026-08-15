@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>66x666 - Complete Platform with Admin Controls</title>
-    <!-- Icons Link -->
-    <link href="https://cloudflare.com" rel="stylesheet">
+    <title>MK 888 - Pakistan Online Portal</title>
+    <!-- FontAwesome Icons Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-dark: #111111;
@@ -21,114 +21,372 @@
             --admin-color: #a855f7;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #000000; color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; }
         .hidden { display: none !important; }
 
-        /* Mobile Container Layout */
         .app-container { width: 100%; max-width: 480px; background: var(--bg-dark); min-height: 100vh; position: relative; padding-bottom: 75px; border-left: 1px solid #222; border-right: 1px solid #222; display: flex; flex-direction: column; }
 
-        /* TOP LOGO BANNER */
-        .brand-header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 1px solid #2a2a2a; position: relative; }
+        .brand-header { background: #1a1a1a; padding: 15px; text-align: center; border-bottom: 1px solid #2a2a2a; }
         .brand-logo { font-size: 26px; font-weight: 900; color: var(--accent); font-style: italic; letter-spacing: -1px; }
         .brand-logo span { color: #ffffff; font-size: 28px; }
 
-        /* IN-APP HEADER */
         .app-header { background: var(--card-bg); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
         .logo-text { font-size: 20px; font-weight: 800; color: var(--accent); }
         .user-info { display: flex; align-items: center; gap: 12px; }
         .balance-box { background: #000; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--accent); font-size: 14px; color: var(--accent); font-weight: bold; }
         .logout-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; font-size: 16px; }
 
-        /* AUTH FORMS CONTAINER */
         .auth-wrapper { padding: 15px; display: flex; flex-direction: column; justify-content: center; flex: 1; }
         .gift-banner { background: linear-gradient(135deg, #2c1e05, #171719); padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(249,177,52,0.15); margin-bottom: 15px; text-align: center; font-size: 12px; }
-        .gift-banner color-gold { color: var(--accent); font-weight: bold; }
+        .color-gold { color: var(--accent); font-weight: bold; }
 
-        /* TABS */
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #222; }
         .auth-tab { flex: 1; text-align: center; padding: 15px 0; cursor: pointer; color: var(--text-sub); font-weight: bold; font-size: 16px; }
         .auth-tab.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
 
         .auth-card { background: var(--card-bg); padding: 25px 20px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .reg-sub-tabs { display: flex; gap: 15px; margin-bottom: 20px; font-size: 13px; color: var(--text-sub); }
-        .reg-sub-tab { cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .reg-sub-tab.active { color: var(--accent); font-weight: bold; }
 
-        /* INPUT FIELDS */
         .input-label { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; display: block; }
         .input-group { background: var(--input-bg); padding: 14px 15px; margin-bottom: 16px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; position: relative; }
         .country-flag { display: flex; align-items: center; gap: 6px; padding-right: 12px; border-right: 1px solid #3a3a3c; font-size: 14px; font-weight: bold; color: #fff; }
         .input-group i { color: #555; font-size: 16px; }
-        .input-group input { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
-        .toggle-pass { position: absolute; right: 15px; cursor: pointer; color: #555 !important; }
+        .input-group input, .input-group select { background: none; border: none; color: #fff; width: 100%; outline: none; font-size: 14px; }
 
-        /* CHECKBOX */
-        .checkbox-container { display: flex; align-items: flex-start; gap: 8px; margin: 15px 0; font-size: 12px; color: var(--text-sub); line-height: 1.4; }
-        .checkbox-container input { margin-top: 2px; accent-color: var(--accent); width: 15px; height: 15px; }
-
-        /* BUTTONS */
         .btn-yellow { width: 100%; padding: 15px; background: linear-gradient(180deg, #fbc02d 0%, #f9a825 100%); border: none; border-radius: 8px; font-weight: bold; color: #000; cursor: pointer; font-size: 16px; margin-top: 5px; text-transform: uppercase; }
-        .btn-admin { background: linear-gradient(180deg, #a855f7 0%, #7e22ce 100%) !important; color: white !important; padding: 10px 15px; font-size: 12px; border-radius: 6px; margin-top: 5px; }
-        .btn-danger { background: #ff3b30 !important; color: white !important; }
-        .btn-success { background: #34c759 !important; color: black !important; }
+        .btn-danger { background: #ff3b30 !important; color: white !important; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .btn-success { background: #34c759 !important; color: black !important; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
 
-        /* SOCIAL BINDING */
-        .social-binding { margin-top: 30px; text-align: center; }
-        .social-icons { display: flex; justify-content: center; gap: 25px; }
-        .social-icons a { width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 22px; text-decoration: none; }
-        .social-icons a.google { background: #fff; color: #000; }
-        .social-icons a.facebook { background: #1877f2; }
-        .social-icons a.telegram { background: #0088cc; }
-
-        /* LOBBY */
         .view-section { padding: 20px 15px; flex: 1; }
         .games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .game-card { background: var(--card-bg); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; }
-        .back-lobby-btn { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .game-card i { font-size: 32px; color: var(--accent); margin-bottom: 8px; }
 
-        /* MOCK SCREENS */
-        .mock-screen { height: 180px; background: #050505; border-radius: 10px; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-size: 32px; font-weight: bold; margin-bottom: 15px; color: var(--accent); flex-direction: column; gap: 10px; }
-        .bet-box { background: var(--card-bg); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .bet-box input, .bet-box select { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; text-align: center; font-size: 16px; margin-bottom: 10px; font-weight: bold; outline: none; }
-
-        /* SECRET ADMIN PANEL UI */
         .admin-section { background: #151026; border: 1px solid var(--admin-color); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
         .admin-title { font-size: 18px; font-weight: bold; color: var(--admin-color); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .admin-row { margin-bottom: 15px; }
         .admin-row label { font-size: 12px; color: #c084fc; display: block; margin-bottom: 6px; }
-        .admin-row input, .admin-row select { width: 100%; padding: 10px; background: #241a3a; border: 1px solid #581c87; color: white; border-radius: 6px; outline: none; }
         
-        .request-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-        .request-table th, .request-table td { border: 1px solid #4a1d96; padding: 8px; text-align: left; }
+        .request-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
+        .request-table th, .request-table td { border: 1px solid #4a1d96; padding: 8px 6px; text-align: left; }
         .request-table th { background: #2e1065; color: #c084fc; }
 
-        /* WALLET STYLES */
         .pm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         .pm-item { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; font-weight: bold; font-size: 14px; }
         .pm-item.active { border-color: var(--accent); color: var(--accent); background: rgba(249, 177, 52, 0.05); }
-        .account-display-box { background: #222; border-radius: 8px; padding: 12px; border: 1px solid #333; margin-bottom: 15px; text-align: left; }
-        .account-display-box p { font-size: 13px; color: #aaa; margin-bottom: 4px; }
-        .account-display-box strong { color: #fff; font-size: 15px; }
 
-        /* BOTTOM NAV */
+        .account-display-box { background: #1c1c1e; border: 1px dashed var(--accent); border-radius: 10px; padding: 15px; margin-bottom: 15px; text-align: left; }
+        .account-display-box p { font-size: 13px; color: var(--text-sub); margin-bottom: 6px; }
+        .account-display-box strong { font-size: 15px; color: #fff; }
+
         .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: var(--card-bg); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--border-color); z-index: 100; }
         .nav-item { text-align: center; color: var(--text-sub); cursor: pointer; font-size: 11px; flex: 1; }
         .nav-item i { font-size: 18px; display: block; margin-bottom: 4px; }
         .nav-item.active { color: var(--accent); font-weight: bold; }
         .nav-admin-btn { color: #c084fc !important; }
 
-        /* TOAST */
         .toast-msg { position: fixed; top: -50px; left: 50%; transform: translateX(-50%); background: var(--success); color: #000; padding: 12px 25px; border-radius: 25px; font-size: 13px; font-weight: bold; z-index: 1000; transition: 0.3s ease; }
         .toast-msg.show { top: 20px; }
         .toast-danger { background: var(--danger); color: #fff; }
-        .toast-admin { background: var(--admin-color); color: white; }
     </style>
 </head>
 <body>
 
+<div id="toast" class="toast-msg">Action successful!</div>
+
 <div class="app-container">
 
-    <!-- TOP BRAND BANNER -->
+    <!-- BRAND HEADER -->
     <div class="brand-header" id="brand-header">
+        <div class="brand-logo">MK<span>888</span></div>
+    </div>
+
+    <!-- LOGGED IN APP HEADER -->
+    <div class="app-header hidden" id="app-header">
+        <div class="logo-text" id="header-logo-text">MK 888 LOBBY</div>
+        <div class="user-info">
+            <div class="balance-box">Rs <span id="user-balance">0.00</span></div>
+            <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </div>
+
+    <!-- AUTHENTICATION VIEW -->
+    <div id="view-auth" class="auth-wrapper">
+        <div class="gift-banner">
+            Welcome to MK 888! <span class="color-gold">Deposit & Get 100% Bonus</span> instantly in your wallet.
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tab-login-btn" onclick="switchAuthTab('login')">LOGIN</div>
+            <div class="auth-tab" id="tab-register-btn" onclick="switchAuthTab('register')">REGISTER</div>
+        </div>
+
+        <div class="auth-card">
+            <form id="auth-form" onsubmit="handleAuth(event)">
+                <span class="input-label">Phone Number</span>
+                <div class="input-group">
+                    <div class="country-flag">+92</div>
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="tel" id="auth-phone" placeholder="3001234567" required>
+                </div>
+
+                <span class="input-label">Password</span>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="auth-password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-yellow" id="auth-submit-btn">LOGIN</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN LOBBY VIEW -->
+    <div id="view-lobby" class="view-section hidden">
+        <h3 style="margin-bottom: 15px; color: var(--accent);">MK 888 Hot Games</h3>
+        <div class="games-grid">
+            <div class="game-card" onclick="showToast('Starting Game...')">
+                <i class="fa-solid fa-gamepad"></i>
+                <h4>Slots 888</h4>
+            </div>
+            <div class="game-card" onclick="showToast('Starting Game...')">
+                <i class="fa-solid fa-dice"></i>
+                <h4>Roulette</h4>
+            </div>
+            <div class="game-card" onclick="showToast('Starting Game...')">
+                <i class="fa-solid fa-gem"></i>
+                <h4>Mines</h4>
+            </div>
+            <div class="game-card" onclick="showToast('Starting Game...')">
+                <i class="fa-solid fa-rocket"></i>
+                <h4>Aviator</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEPOSIT VIEW -->
+    <div id="view-deposit" class="view-section hidden">
+        <h3 style="margin-bottom: 15px; color: var(--accent);">Deposit Funds</h3>
         
+        <div class="pm-grid">
+            <div class="pm-item active" onclick="selectDepositMethod('sadapay', this)">SadaPay</div>
+            <div class="pm-item" onclick="selectDepositMethod('easypaisa', this)">EasyPaisa</div>
+        </div>
+
+        <!-- ACCOUNT DETAILS DISPLAY BOX -->
+        <div class="account-display-box" id="account-info-box">
+            <p>Send payment to following account:</p>
+            <p>Payment Method: <strong id="disp-method" style="color:var(--accent);">SadaPay</strong></p>
+            <p>Account Title: <strong id="disp-title">M Masood</strong></p>
+            <p>Account Number: <strong id="disp-number" style="font-size:16px; color:#34c759;">03213699372</strong></p>
+        </div>
+
+        <div class="auth-card">
+            <span class="input-label">Deposit Amount (PKR)</span>
+            <div class="input-group">
+                <i class="fa-solid fa-money-bill"></i>
+                <input type="number" id="dep-amount" placeholder="1000">
+            </div>
+            <span class="input-label">Transaction ID (TID / Trx ID)</span>
+            <div class="input-group">
+                <i class="fa-solid fa-receipt"></i>
+                <input type="text" id="dep-tid" placeholder="Trx ID e.g. 84920194">
+            </div>
+            <button class="btn-yellow" onclick="submitDeposit()">Submit Deposit</button>
+        </div>
+    </div>
+
+    <!-- WITHDRAW VIEW -->
+    <div id="view-withdraw" class="view-section hidden">
+        <h3 style="margin-bottom: 15px; color: var(--accent);">Withdraw Funds</h3>
+        <div class="auth-card">
+            <span class="input-label">Select Method</span>
+            <div class="input-group">
+                <select id="with-method" style="background:#1c1c1e; color:#fff; border:none; width:100%;">
+                    <option value="SadaPay">SadaPay</option>
+                    <option value="EasyPaisa">EasyPaisa</option>
+                    <option value="JazzCash">JazzCash</option>
+                </select>
+            </div>
+            <span class="input-label">Account Number</span>
+            <div class="input-group">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <input type="text" id="with-account" placeholder="03001234567">
+            </div>
+            <span class="input-label">Amount (PKR)</span>
+            <div class="input-group">
+                <i class="fa-solid fa-wallet"></i>
+                <input type="number" id="with-amount" placeholder="500">
+            </div>
+            <button class="btn-yellow" onclick="submitWithdrawal()">Request Withdraw</button>
+        </div>
+    </div>
+
+    <!-- SECRET ADMIN CONTROL PANEL -->
+    <div id="view-admin" class="view-section hidden">
+        <div class="admin-section">
+            <div class="admin-title"><i class="fa-solid fa-user-shield"></i> MK 888 Admin Panel</div>
+
+            <!-- MANUAL BALANCE CONTROL -->
+            <div class="admin-row">
+                <label>Manual Balance Adjustment</label>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="admin-target-user" placeholder="User Phone" style="padding:8px; background:#241a3a; border:1px solid #581c87; color:#fff; border-radius:6px; flex:1; outline:none;">
+                    <input type="number" id="admin-adjust-amt" placeholder="Amount" style="padding:8px; background:#241a3a; border:1px solid #581c87; color:#fff; border-radius:6px; width:80px; outline:none;">
+                    <button class="btn-success" onclick="adminAdjustBalance()">Add</button>
+                </div>
+            </div>
+
+            <!-- DEPOSITS APPROVAL TABLE -->
+            <h4 style="color:#c084fc; margin:15px 0 8px 0;">Pending Deposit Requests</h4>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>TID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-deposits-list">
+                    <!-- Dynamic Requests Added via JS -->
+                </tbody>
+            </table>
+
+            <!-- WITHDRAWALS APPROVAL TABLE -->
+            <h4 style="color:#c084fc; margin:20px 0 8px 0;">Pending Withdraw Requests</h4>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Account</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-withdraws-list">
+                    <!-- Dynamic Requests Added via JS -->
+                </tbody>
+            </table>
+
+            <!-- USER BAN & MANAGEMENT TABLE -->
+            <h4 style="color:#c084fc; margin:20px 0 8px 0;">User Ban / Unban System</h4>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-users-list">
+                    <!-- Dynamic User List -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav hidden" id="bottom-nav">
+        <div class="nav-item active" onclick="switchView('lobby', this)"><i class="fa-solid fa-house"></i>Lobby</div>
+        <div class="nav-item" onclick="switchView('deposit', this)"><i class="fa-solid fa-building-columns"></i>Deposit</div>
+        <div class="nav-item" onclick="switchView('withdraw', this)"><i class="fa-solid fa-hand-holding-dollar"></i>Withdraw</div>
+        <div class="nav-item nav-admin-btn" onclick="openAdminWithPin(this)"><i class="fa-solid fa-gear"></i>Admin</div>
+    </div>
+
+</div>
+
+<script>
+    // System Configurations
+    const SECRET_ADMIN_PIN = "6666"; // Secret PIN for Admin Panel
+    let currentAuthMode = 'login';
+    let currentUser = null;
+    let currentDepositMethod = 'SadaPay';
+    
+    // Payment Accounts Database
+    const paymentInfo = {
+        'sadapay': { method: 'SadaPay', title: 'M Masood', number: '03213699372' },
+        'easypaisa': { method: 'EasyPaisa', title: 'M Talha', number: '03454475392' }
+    };
+
+    // In-Memory Database State
+    let userDatabase = {
+        '03001234567': { phone: '03001234567', balance: 500.00, banned: false }
+    };
+    
+    let pendingDeposits = [];
+    let pendingWithdrawals = [];
+
+    function showToast(message, isDanger = false) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        if(isDanger) toast.classList.add('toast-danger');
+        else toast.classList.remove('toast-danger');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function selectDepositMethod(methodKey, element) {
+        document.querySelectorAll('.pm-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+
+        const details = paymentInfo[methodKey];
+        currentDepositMethod = details.method;
+        
+        document.getElementById('disp-method').innerText = details.method;
+        document.getElementById('disp-title').innerText = details.title;
+        document.getElementById('disp-number').innerText = details.number;
+    }
+
+    function switchAuthTab(mode) {
+        currentAuthMode = mode;
+        document.getElementById('tab-login-btn').classList.toggle('active', mode === 'login');
+        document.getElementById('tab-register-btn').classList.toggle('active', mode === 'register');
+        document.getElementById('auth-submit-btn').innerText = mode === 'login' ? 'LOGIN' : 'REGISTER NOW';
+    }
+
+    function handleAuth(e) {
+        e.preventDefault();
+        const phone = document.getElementById('auth-phone').value.trim();
+        const password = document.getElementById('auth-password').value;
+
+        if(!phone || !password) {
+            showToast('All fields are required!', true);
+            return;
+        }
+
+        if(userDatabase[phone] && userDatabase[phone].banned) {
+            showToast('Aapka account BAN kar diya gaya hai!', true);
+            return;
+        }
+
+        if(!userDatabase[phone]) {
+            userDatabase[phone] = { phone: phone, balance: 0.00, banned: false };
+        }
+
+        currentUser = userDatabase[phone];
+        updateBalanceDisplay();
+
+        showToast(currentAuthMode === 'login' ? 'Login Successful!' : 'Account Registered!');
+        
+        document.getElementById('view-auth').classList.add('hidden');
+        document.getElementById('brand-header').classList.add('hidden');
+        document.getElementById('app-header').classList.remove('hidden');
+        document.getElementById('bottom-nav').classList.remove('hidden');
+        
+        switchView('lobby');
+    }
+
+    function logout() {
+        currentUser = null;
+        document.getElementById('view-auth').classList.remove('hidden');
+        document.getElementById('brand-header').classList.remove('hidden');
+        document.getElementById('app-header').classList.add('hidden');
+        document.getElementById('bottom-nav').classList.add('hidden');
+        
+        document.getElementById('view-lobby').classList.add('hidden');
+        document.getElementById('view-deposit').classList.add('hidden');
+        document.getElementById('view-withdraw').classList.add('hidden');
+        document.getElementById('view-admin').classList.add('hidden');
+        
+  
